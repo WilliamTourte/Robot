@@ -13,74 +13,74 @@ class Robot:
         return cls.nb_robot
 
     def __init__(self, robot_type="Générique"):
-        self.__robot_type = robot_type
-        self.__numero_serie = "template"
-        self.__orientation = "NORD"
-        self.__statut = 1
-        self.__lst = []
+        self._robot_type = robot_type
+        self._numero_serie = "template"
+        self._orientation = "NORD"
+        self._statut = 1
+        self._lst = []
         Robot.nb_robot += 1
 
     def __len__(self):
-        return len(self.__lst)
+        return len(self._lst)
 
     @property
     def robot_type(self):
-        return self.__robot_type
+        return self._robot_type
 
     @robot_type.setter
     def robot_type(self, value):
         if len(value) >= 2:
-            self.__robot_type = value
+            self._robot_type = value
         else:
             print("Erreur : le type de robot doit faire + de 2 caractères")
-            self.__robot_type = "Générique"
+            self._robot_type = "Générique"
 
     @property
     def numero_serie(self):
-        return self.__numero_serie
+        return self._numero_serie
 
     @numero_serie.setter
     def numero_serie(self, value):
         temp = random.choice(string.ascii_letters) + random.choice(string.ascii_letters)
         temp = temp + str(random.randrange(100000000))
-        self.__numero_serie = temp
+        self._numero_serie = temp
 
     @property
     def orientation(self):
-        return self.__orientation
+        return self._orientation
 
     @orientation.setter
     def orientation(self, value):
         if value in self.directions:
-            self.__orientation = value
+            self._orientation = value
         else:
             print("Direction erronnée")
 
     @property
     def statut(self):
-        return self.statuts[self.__statut]
+        return self.statuts[self._statut]
 
     @statut.setter
     def statut(self, value):
         value = int(value)
         if value in (1, 2, 3):
             print("valeur de statut OK")
-            self.__statut = value
+            self._statut = value
         else:
             print("valeur :", value)
             print("Mauvais statut")
 
     def tourner(self, entier):
         print("Le robot tourne")
-        index = self.directions.index(self.__orientation)
+        index = self.directions.index(self._orientation)
         if entier == -1 or entier == 1:
             index = index + entier
-            self.__orientation = self.directions[index]
+            self._orientation = self.directions[index]
         else:
             print("Mauvais ordre : entier n'est pas -1 ou 1 :", entier)
 
     def __str__(self):
-        return (f"Robot {self.__numero_serie} \n"
-                f"Type : {self.__robot_type} \n"
+        return (f"Robot {self._numero_serie} \n"
+                f"Type : {self._robot_type} \n"
                 f"Statut : {self.statut}\n"
-                f"Orientation : {self.__orientation}\n")
+                f"Orientation : {self._orientation}\n")
