@@ -31,8 +31,6 @@ class Robot:
     def robot_type(self, value):
         if value is None:
             self._robot_type = "Générique"
-            return
-
         if len(value) >= 2:
             self._robot_type = value
         else:
@@ -68,23 +66,23 @@ class Robot:
     def statut(self, value):
         value = int(value)
         if value in (1, 2, 3):
-
+            print("valeur de statut OK")
             self._statut = value
         else:
-            print("Mauvais statut car valeur =", value)
+            print("valeur :", value)
+            print("Mauvais statut")
 
     def tourner(self, entier):
-
+        print("Le robot tourne")
         index = self.directions.index(self._orientation)
         if entier == -1 or entier == 1:
             index = index + entier
             self._orientation = self.directions[index]
-            print("Le robot tourne")
         else:
             print("Mauvais ordre : entier n'est pas -1 ou 1 :", entier)
 
     def __str__(self):
         return (f"Robot {self._numero_serie} \n"
                 f"Type : {self._robot_type} \n"
-                f"Statut : {self._statut}\n"
+                f"Statut : {self.statut}\n"
                 f"Orientation : {self._orientation}\n")
