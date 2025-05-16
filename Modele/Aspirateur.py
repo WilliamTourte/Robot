@@ -7,6 +7,7 @@ class Aspirateur:
         self._marque = marque
         self._puissance = puissance
 
+
     @property
     def marque(self):
         return self._marque
@@ -25,19 +26,24 @@ class Aspirateur:
     def __str__(self):
         return "Aspirateur : "+self._marque+" Puissance : "+str(self._puissance)
 
-class AspirateurRobot(RobotMobile, Aspirateur):
-    def __init__(self, robot_type="Aspirateur Robot", abs=0, ord=0, marque="Bosch'", puissance=4):
+class AspirateurRobot(Aspirateur, RobotMobile):
+    def __init__(self, abs=0, ord=0, marque="Bosch'", puissance=4):
         RobotMobile.__init__(self, robot_type="Aspirateur Robot", abs=0, ord=0)
         Aspirateur.__init__(self, marque, puissance)
+        self._distance_max = 1000
+        self._robot_type = "Aspirateur Robot"
 
+    @property
+    def distance_max(self):
+        return self._distance_max
+    @distance_max.setter
+    def distance_max(self, value):
+        if value > 0:
+            self._distance_max = value
 
     def __str__(self):
         return (RobotMobile.__str__(self)+"\n"+
                "Marque : "+str(self._marque)+"\n"+
                 "Puissance : "+str(self._puissance))
-
-
-r=AspirateurRobot("Aspirateur Robot",4,2,"Dyson")
-print(r)
 
 

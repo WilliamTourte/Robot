@@ -5,7 +5,7 @@ class RobotMobile(Robot):
     '''RobotMobile hérite de Robot'''
 
     def __init__(self, robot_type="Générique", abs=0, ord=0):
-        super().__init__()  #super() pour reprendre la construction de la classe supérieure, sans self
+        super().__init__(robot_type)  #super() pour reprendre la construction de la classe supérieure, sans self mais avec robot_type pour le passer au parent
         self._Abscisse=abs
         self._Ordonnée=ord
 
