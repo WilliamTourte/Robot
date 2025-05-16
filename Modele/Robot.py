@@ -14,9 +14,9 @@ class Robot:
 
     def __init__(self, robot_type="Générique"):
         self._robot_type = robot_type
-        self.numero_serie = "t"  # Utilisation du setter pour générer le numéro de série : pas d'underscore !
+        self._numero_serie = self.genNumeroSerie()  # Utilisation du setter pour générer le numéro de série : pas d'underscore !
         self._orientation = "NORD"
-        self.statut = 1
+        self._statut = 1
         self._lst = []
         Robot.nb_robot += 1
 
@@ -43,11 +43,11 @@ class Robot:
     def numero_serie(self):
         return self._numero_serie
 
-    @numero_serie.setter
-    def numero_serie(self, value):
+
+    def genNumeroSerie(self):
         temp = random.choice(string.ascii_letters) + random.choice(string.ascii_letters)
         temp = temp + str(random.randrange(100000000))
-        self._numero_serie = temp
+        return temp
 
     @property
     def orientation(self):
@@ -85,6 +85,6 @@ class Robot:
 
     def __str__(self):
         return (f"Robot {self._numero_serie} \n"
-                f"Type : {self._robot_type} \n"
-                f"Statut : {self._statut}\n"
+                f"Type : {self.robot_type} \n"
+                f"Statut : {self.statut}\n"
                 f"Orientation : {self._orientation}\n")
