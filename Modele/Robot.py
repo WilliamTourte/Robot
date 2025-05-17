@@ -78,6 +78,8 @@ class Robot:
         index = self.directions.index(self._orientation)
         if entier == -1 or entier == 1:
             index = index + entier
+            if index >= len(self.directions):
+                index = 0
             self._orientation = self.directions[index]
             print("Le robot tourne")
         else:

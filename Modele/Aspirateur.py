@@ -1,12 +1,9 @@
 from Modele.RobotMobile import RobotMobile
 
-
 class Aspirateur:
     def __init__(self, marque, puissance : int):
-
         self._marque = marque
         self._puissance = puissance
-
 
     @property
     def marque(self):
@@ -27,10 +24,10 @@ class Aspirateur:
         return "Aspirateur : "+self._marque+" Puissance : "+str(self._puissance)
 
 class AspirateurRobot(Aspirateur, RobotMobile):
-    def __init__(self, abs=0, ord=0, marque="Bosch'", puissance=4):
+    def __init__(self, marque, puissance, distance_max):
         RobotMobile.__init__(self, robot_type="Aspirateur Robot", abs=0, ord=0)
         Aspirateur.__init__(self, marque, puissance)
-        self._distance_max = 1000
+        self._distance_max = distance_max
         self._robot_type = "Aspirateur Robot"
         self._abs = abs
         self._ord = ord
@@ -53,13 +50,37 @@ class AspirateurRobot(Aspirateur, RobotMobile):
         longueur=len(piece)
         distance=0      #initilisation
         self.tourner(1) #initialisation
-        #while distance<self._distance_max:
-        while self._Abscisse < largeur:
-            piece[self._Ordonnée][self._Abscisse]="*"
-            self.avancer(1)
-            print(f"ord = {self._Ordonnée} abs = {self._Abscisse}")
-            distance+=1
-
+        while distance<self._distance_max:
+            print("Distance : ", distance)
+            if self._orientation == "EST":
+                while self._Abscisse < largeur-1 and distance < self._distance_max:
+                    piece[self._Ordonnée][self._Abscisse]="*"
+                    self.avancer(1)
+                    distance+=1
+                if self._Abscisse == largeur-1: #bout de ligne : on tourne
+                    print(f"ord = {self._Ordonnée} abs = {self._Abscisse}")
+                    piece[self._Ordonnée][self._Abscisse] = "*"
+                    self.tourner(-1)
+                    self.avancer(1)
+                    distance += 1
+                    print(f"ord = {self._Ordonnée} abs = {self._Abscisse}")
+                    piece[self._Ordonnée][self._Abscisse] = "*"
+                    self.tourner(-1)
+            if self._orientation == "OUEST":
+                while self._Abscisse > 0 and distance < self._distance_max:
+                    piece[self._Ordonnée][self._Abscisse]="*"
+                    self.avancer(1)
+                    distance+=1
+                if self._Abscisse == 0: #bout de ligne OUEST : on tourne
+                    print(f"ord = {self._Ordonnée} abs = {self._Abscisse}")
+                    piece[self._Ordonnée][self._Abscisse] = "*"
+                    self.tourner(1)
+                    self.avancer(1)
+                    distance += 1
+                    print(f"ord = {self._Ordonnée} abs = {self._Abscisse}")
+                    piece[self._Ordonnée][self._Abscisse] = "*"
+                    self.tourner(1)
+        print("Distance : ", distance, "Distance max : ", self._distance_max)
 
 # Création de pièce de [largeur x longueur] cases
 def crea_plateau(largeur, longueur):
@@ -78,12 +99,3 @@ def afficher(plateau):
         for j in sorted(plateau[i].keys()):
             ligne.append(plateau[i][j])
         print(" ".join(ligne)) #La ligne est affichée en utilisant " ".join(ligne), ce qui permet de séparer chaque élément par un espace.
-
-piece=crea_plateau(10,15)
-afficher(piece)
-
-r=AspirateurRobot()
-'''plateau[ord][abs]'''
-piece[0][1]="X"
-r.parcours(piece)
-afficher(piece)

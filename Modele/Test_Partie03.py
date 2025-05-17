@@ -95,6 +95,28 @@ ar1 = AspirateurRobot('Rowenta', 4500, 115)
 print(ar1)
 print("------------------------------------")
 
-#print("--- TEST PARCOURS --")
-#ar1.parcours(10, 15)
-#print("------------------------------------")
+print("--- TEST PARCOURS --")
+# Création de pièce de [largeur x longueur] cases
+def crea_plateau(largeur, longueur):
+    plateau = dict()
+
+    for i in range(0, longueur):
+        plateau[i] = dict()
+        for j in range(0, largeur):
+            plateau[i][j] = "-"
+    return plateau
+
+# Affichage plateau
+def afficher(plateau):
+    for i in sorted(plateau.keys()): #La boucle for i in sorted(plateau.keys()) parcourt les clés du dictionnaire plateau dans l'ordre croissant.
+        ligne = [] #Pour chaque clé i, une liste ligne est construite en ajoutant chaque valeur de plateau[i][j].
+        for j in sorted(plateau[i].keys()):
+            ligne.append(plateau[i][j])
+        print(" ".join(ligne)) #La ligne est affichée en utilisant " ".join(ligne), ce qui permet de séparer chaque élément par un espace.
+
+piece=crea_plateau(10,15)
+
+ar1.parcours(piece)
+afficher(piece)
+print("------------------------------------")
+'''**********'''
