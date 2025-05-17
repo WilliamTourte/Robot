@@ -32,6 +32,8 @@ class AspirateurRobot(Aspirateur, RobotMobile):
         Aspirateur.__init__(self, marque, puissance)
         self._distance_max = 1000
         self._robot_type = "Aspirateur Robot"
+        self._abs = abs
+        self._ord = ord
 
     @property
     def distance_max(self):
@@ -46,8 +48,18 @@ class AspirateurRobot(Aspirateur, RobotMobile):
                "Marque : "+str(self._marque)+"\n"+
                 "Puissance : "+str(self._puissance))
 
-    def parcours(self,largeur,longueur):
-        ''''''
+    def parcours(self,piece):
+        largeur=len(piece[0])
+        longueur=len(piece)
+        distance=0      #initilisation
+        self.tourner(1) #initialisation
+        #while distance<self._distance_max:
+        while self._Abscisse < largeur:
+            piece[self._Ordonnée][self._Abscisse]="*"
+            self.avancer(1)
+            print(f"ord = {self._Ordonnée} abs = {self._Abscisse}")
+            distance+=1
+
 
 # Création de pièce de [largeur x longueur] cases
 def crea_plateau(largeur, longueur):
@@ -67,10 +79,11 @@ def afficher(plateau):
             ligne.append(plateau[i][j])
         print(" ".join(ligne)) #La ligne est affichée en utilisant " ".join(ligne), ce qui permet de séparer chaque élément par un espace.
 
-plateau=crea_plateau(10,15)
-afficher(plateau)
+piece=crea_plateau(10,15)
+afficher(piece)
 
+r=AspirateurRobot()
 '''plateau[ord][abs]'''
-plateau[0][1]="X"
-print()
-afficher(plateau)
+piece[0][1]="X"
+r.parcours(piece)
+afficher(piece)
